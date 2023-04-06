@@ -1,1 +1,1 @@
-# stakepro
+# stakepro-frontend
