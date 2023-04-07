@@ -40,8 +40,7 @@ function StakeTonen() {
 
   const checkMetamask = async () => {
     if (isMetaMaskInstalled) {
-      if (window.ethereum.chainId === "0x5") {
-        // if (window.ethereum.chainId === "0x61") {
+      if (window.ethereum.chainId === "0x61") {
         const userAccount = await connect();
         console.log(userAccount);
         setAccount(userAccount[0]);
@@ -65,8 +64,7 @@ function StakeTonen() {
     const signer = await getSigner();
     // Create a contract
     const venusSmartContract = new Contract(
-      // "0x2E7222e51c0f6e98610A1543Aa3836E092CDe62c",
-      "0xd38881b6fE6c07fCF960b89Cb2fB92B6240f3EBd",
+      "0x2E7222e51c0f6e98610A1543Aa3836E092CDe62c",
       ABI,
       signer
     );
@@ -77,9 +75,7 @@ function StakeTonen() {
     let balance = await getBalance(account);
     balance = parseInt(balance) * 10 ** -18;
 
-
-    // if (balance < Number(mintValue)) {
-    if (balance >= Number(mintValue)) {
+    if (balance < Number(mintValue)) {
       toast({
         position: "top-left",
         render: () => (
@@ -91,10 +87,7 @@ function StakeTonen() {
     }
     try {
       const smartContract = await venusSmartContract();
-      // const tx = await smartContract.mint({
-      //   value: parseEther(mintValue),
-      // });
-      const tx = await smartContract.stake({
+      const tx = await smartContract.mint({
         value: parseEther(mintValue),
       });
       const receipt = await tx.wait(1);
@@ -122,38 +115,38 @@ function StakeTonen() {
   };
   return (
     <ChakraProvider theme={theme}>
-      <Box textAlign="center" fontSize="xl">
-        <Grid minH="100vh" p={3}>
-          <VStack spacing={8}>
-            {chainError && (
-              <Alert status="error">
-                <AlertIcon />
-                <AlertTitle>Wrong Network!</AlertTitle>
-                <AlertDescription>
-                  Please change to Binance Smart Contract testnet
-                </AlertDescription>
-              </Alert>
-            )}
-            <Text>Binance Venus Smart Contract.</Text>
-            <Text>{account}</Text>
-            <Text>{myBalance}</Text>
-            <Button onClick={walletConnection} disabled={account}>
-              {account ? "Connected" : "Connect Wallet"}
-            </Button>
+    <Box textAlign="center" fontSize="xl">
+      <Grid minH="100vh" p={3}>
+        <VStack spacing={8}>
+          {chainError && (
+            <Alert status="error">
+              <AlertIcon />
+              <AlertTitle>Wrong Network!</AlertTitle>
+              <AlertDescription>
+                Please change to Binance Smart Contract testnet
+              </AlertDescription>
+            </Alert>
+          )}
+          <Text>Binance Venus Smart Contract.</Text>
+          <Text>{account}</Text>
+          <Text>{myBalance}</Text>
+          <Button onClick={walletConnection} disabled={account}>
+            {account ? "Connected" : "Connect Wallet"}
+          </Button>
 
-            <HStack spacing="20px">
-              <Input
-                value={mintValue}
-                onChange={(e) => setMintValue(e.target.value)}
-                placeholder="enter value to mint"
-              ></Input>
-              <Button onClick={mint}>Mint </Button>
-            </HStack>
-          </VStack>
-        </Grid>
-      </Box>
-    </ChakraProvider>
-  );
+          <HStack spacing="20px">
+            <Input
+              value={mintValue}
+              onChange={(e) => setMintValue(e.target.value)}
+              placeholder="enter value to mint"
+            ></Input>
+            <Button onClick={mint}>Mint </Button>
+          </HStack>
+        </VStack>
+      </Grid>
+    </Box>
+  </ChakraProvider>
+);
 }
 
 export default StakeTonen;
