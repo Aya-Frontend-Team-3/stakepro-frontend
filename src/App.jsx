@@ -24,7 +24,6 @@ const App = () => {
           <Route path="contact" element={<ContactPage/>}></Route> 
           <Route path="login" element={<Stake/>}></Route>  
         </Routes>     
-    {/* <StakeTonen/> */}
       </div>
     );
 }
